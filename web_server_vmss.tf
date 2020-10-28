@@ -5,6 +5,10 @@ resource azurerm_linux_virtual_machine_scale_set web {
   sku = var.web_vm_type
   instances = var.min_web_servers
   admin_username   = "adminuser"
+  zone_balance = true
+  zones = ["1", "2", "3"]
+  single_placement_group = true
+  custom_data = filebase64("${path.module}/resources/web-cloud-init.sh")
 
   admin_ssh_key {
     username   = "adminuser"
@@ -16,6 +20,7 @@ resource azurerm_linux_virtual_machine_scale_set web {
     ip_configuration {
       name = "ipc-${var.region_code}-${var.solution_name}-web"
       subnet_id = var.web_subnet_ids[0]
+      load_balancer_backend_address_pool_ids = [azurerm_lb_backend_address_pool.web.id]
       primary = true
     }
     primary = true
