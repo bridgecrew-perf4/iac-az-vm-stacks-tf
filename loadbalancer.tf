@@ -28,3 +28,15 @@ resource azurerm_lb_backend_address_pool web {
   resource_group_name = var.resource_group_name
   loadbalancer_id = azurerm_lb.loadbalancer.id
 }
+
+# create a loadbalancer probe which checks the health of the web servers
+resource azurerm_lb_probe web {
+  name = "lbp-${var.region_code}-${var.solution_name}-web"
+  resource_group_name = var.resource_group_name
+  loadbalancer_id = azurerm_lb.loadbalancer.id
+  protocol = "Http"
+  port = 80
+  request_path = "/"
+  interval_in_seconds = 15
+  number_of_probes = 2
+}

@@ -9,6 +9,7 @@ resource azurerm_linux_virtual_machine_scale_set web {
   zones = ["1", "2", "3"]
   single_placement_group = true
   custom_data = filebase64("${path.module}/resources/web-cloud-init.sh")
+  upgrade_mode = "Automatic"
 
   admin_ssh_key {
     username   = "adminuser"
@@ -56,4 +57,6 @@ resource azurerm_monitor_autoscale_setting web {
       maximum = var.max_web_servers
     }
   }
+
+  tags = merge(map("Name", "mas-${var.region_code}-${var.solution_name}-web"), local.module_common_tags)
 }
