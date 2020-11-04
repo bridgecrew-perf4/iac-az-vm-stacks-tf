@@ -20,6 +20,9 @@ resource azurerm_public_ip loadbalancer {
   location = var.resource_group_location
   allocation_method = "Static"
   sku = "Standard"
+  domain_name_label = "web-${var.solution_name}"
+  # reverse_fqdn = "web.${azurerm_dns_zone.solution.name}"
+  tags = merge(map("Name", "pip-${var.region_code}-${var.solution_name}-lbe"), local.module_common_tags)
 }
 
 # create a backend address pool for all web servers
@@ -39,4 +42,18 @@ resource azurerm_lb_probe web {
   request_path = "/"
   interval_in_seconds = 15
   number_of_probes = 2
+}
+
+# create a loadbalancer rule for traffic to the web servers
+resource azurerm_lb_rule web_http {
+  resource_group_name = var.resource_group_name
+  loadbalancer_id = azurerm_lb.loadbalancer.id
+  name = "lbr-${var.region_code}-${var.solution_name}-web-http"
+  protocol = "Tcp"
+  frontend_port = 80
+  backend_port = 80
+  frontend_ip_configuration_name = "PublicIPAddress"
+  backend_address_pool_id = azurerm_lb_backend_address_pool.web.id
+  probe_id = azurerm_lb_probe.web.id
+  enable_tcp_reset = true
 }

@@ -12,7 +12,7 @@ resource azurerm_dns_zone solution {
 
 # add a DNS NS record with the solution nameserver to the parent DNS zone
 resource azurerm_dns_ns_record child {
-  name = "${var.solution_name}.azure.msgoat.eu"
+  name = var.solution_name
   resource_group_name = data.azurerm_dns_zone.parent.resource_group_name
   zone_name = data.azurerm_dns_zone.parent.name
   records = azurerm_dns_zone.solution.name_servers
