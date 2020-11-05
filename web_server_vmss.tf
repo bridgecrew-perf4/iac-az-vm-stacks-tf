@@ -21,7 +21,7 @@ resource azurerm_linux_virtual_machine_scale_set web {
     ip_configuration {
       name = "ipc-${var.region_code}-${var.solution_name}-web"
       subnet_id = var.web_subnet_ids[0]
-      load_balancer_backend_address_pool_ids = [azurerm_lb_backend_address_pool.web.id]
+      application_gateway_backend_address_pool_ids = [azurerm_application_gateway.loadbalancer.backend_address_pool[0].id]
       primary = true
     }
     primary = true

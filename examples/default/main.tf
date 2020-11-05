@@ -33,6 +33,8 @@ module reference_vnet {
   resource_group_location = azurerm_resource_group.owner.location
   network_name = var.solution_name
   network_cidr = var.network_cidr
+  bastions_enabled = false
+  network_security_groups_enabled = false
 }
 
 module vm_stacks {
