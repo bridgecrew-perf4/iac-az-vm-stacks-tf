@@ -1,9 +1,0 @@
-data azurerm_image web {
-  count = var.web_image_id == "" ? 1 : 0
-  resource_group_name = var.resource_group_name
-  name = "Canonical:UbuntuServer:18.04-LTS:latest"
-}
-
-locals {
-  web_image_id = var.web_image_id == "" ? data.azurerm_image.web[0].id : var.web_image_id
-}

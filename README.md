@@ -4,10 +4,6 @@ Terraform showcase that installs a VM based stack of web servers and application
 
 ## TODO's
 
-* add health probes to VMSS for web servers
-* add DNS records for loadbalancer
-* create TLS certificate for loadbalancer
-* add loadbalancer rules to forward traffic to webservers
 * add VMSS for application servers
 * add loadbalancer backend address pool for application servers
 * add loadbalancer rules to forward traffic to application servers

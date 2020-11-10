@@ -79,3 +79,7 @@ variable "data_subnet_ids" {
   type = list(string)
 }
 
+variable "application_gateway_subnet_id" {
+  description = "unique identifier of the subnet supposed to application gateways"
+}
+

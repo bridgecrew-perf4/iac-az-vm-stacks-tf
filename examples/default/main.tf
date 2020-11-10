@@ -55,4 +55,5 @@ module vm_stacks {
   data_subnet_ids = module.reference_vnet.data_subnet_ids
   min_web_servers = 3
   max_web_servers = 3
+  application_gateway_subnet_id = module.reference_vnet.application_gateway_subnet_id
 }
